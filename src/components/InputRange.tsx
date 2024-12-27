@@ -1,64 +1,42 @@
 'use client';
-import clsx from 'clsx';
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useRef } from 'react';
+import { Slider } from './Slider';
 
 type InputRangeProps = {
   min: number;
   max: number;
+  minValue: number;
+  maxValue: number;
+  onMinValueChange: (value: number) => void;
+  onMaxValueChange: (value: number) => void;
 };
 
-export const InputRange = ({ min, max }: InputRangeProps) => {
-  const [isDragging, setIsDragging] = useState(false);
+export const InputRange = ({ min, max, minValue, maxValue, onMinValueChange, onMaxValueChange }: InputRangeProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const [value, setValue] = useState(min);
 
-  const movePosition = useCallback(
-    (event: MouseEvent) => {
-      if (!sliderRef.current || !isDragging) return;
-
-      const { clientX } = event;
-      const slider = sliderRef.current.getBoundingClientRect();
-      const posX = clientX - slider.left;
-      let value = Math.round((posX / slider.width) * (max - min) + min);
-      value = Math.max(min, value);
-      value = Math.min(max, value);
-      setValue(value);
-    },
-    [isDragging, max, min],
-  );
-
-  const handleMouseDown = useCallback(() => {
-    setIsDragging(true);
-  }, [setIsDragging]);
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-  }, [setIsDragging]);
-
-  useEffect(() => {
-    if (isDragging) {
-      window.addEventListener('mousemove', movePosition);
-      window.addEventListener('mouseup', handleMouseUp);
-      window.addEventListener('mousedown', handleMouseDown);
+  const onCurrentMinValueChange = (value: number) => {
+    if (value < maxValue) {
+      onMinValueChange(value);
     }
-    return () => {
-      window.removeEventListener('mousemove', movePosition);
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mousedown', handleMouseDown);
-    };
-  }, [isDragging, movePosition, handleMouseDown, handleMouseUp]);
+  };
+
+  const onCurrentMaxValueChange = (value: number) => {
+    if (value > minValue) {
+      onMaxValueChange(value);
+    }
+  };
 
   return (
     <div className='bg-white w-full h-2 relative inline-flex items-center p-0' ref={sliderRef}>
+      <Slider containerRef={sliderRef} max={max} min={min} value={minValue} onChange={onCurrentMinValueChange} />
       <div
-        className={clsx('bg-sky-500 h-2 absolute items-center inline-flex', { 'cursor-move': isDragging })}
-        style={{ width: `${((value - min) / (max - min)) * 100}%` }}
-      >
-        <span
-          className='bg-sky-500 rounded-full absolute right-[-8] h-4 w-4 hover:cursor-grab hover:scale-125'
-          onMouseDown={handleMouseDown}
-        />
-      </div>
+        className='bg-sky-500 w-full h-2 absolute items-center inline-flex'
+        style={{
+          width: `${((maxValue - minValue) / (max - min)) * 100}%`,
+          left: `${((minValue - min) / (max - min)) * 100}%`,
+        }}
+      />
+      <Slider containerRef={sliderRef} max={max} min={min} value={maxValue} onChange={onCurrentMaxValueChange} />
     </div>
   );
 };
