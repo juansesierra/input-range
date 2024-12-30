@@ -5,9 +5,10 @@ import { InputRange } from './InputRange';
 type RangeProps = {
   min: number;
   max: number;
+  values?: number[];
 };
 
-export const Range = ({ min, max }: RangeProps) => {
+export const Range = ({ min, max, values }: RangeProps) => {
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
 
@@ -32,7 +33,7 @@ export const Range = ({ min, max }: RangeProps) => {
     setMaxValueInput(value);
   };
 
-  const onBlur = () => {
+  const onMinBlur = () => {
     if (minValueInput < min) {
       onMinRangeChange(min);
       return;
@@ -41,6 +42,13 @@ export const Range = ({ min, max }: RangeProps) => {
       setMinValueInput(minValue);
       return;
     }
+    if (minValueInput < maxValueInput) {
+      setMinValue(minValueInput);
+      return;
+    }
+  };
+
+  const onMaxBlur = () => {
     if (maxValueInput > max) {
       onMaxRangeChange(max);
       return;
@@ -49,8 +57,7 @@ export const Range = ({ min, max }: RangeProps) => {
       setMaxValueInput(maxValue);
       return;
     }
-    if (minValueInput < maxValueInput && maxValueInput > minValueInput) {
-      setMinValue(minValueInput);
+    if (maxValueInput > minValueInput) {
       setMaxValue(maxValueInput);
       return;
     }
@@ -59,12 +66,13 @@ export const Range = ({ min, max }: RangeProps) => {
   return (
     <div className='flex flex-row gap-4 items-center p-10'>
       <input
+        id='min-input'
         className='bg-transparent w-10 text-end'
         type='number'
         max={maxValue}
         value={minValueInput}
         onChange={onMinValueChange}
-        onBlur={onBlur}
+        onBlur={onMinBlur}
       />
       <InputRange
         min={min}
@@ -73,14 +81,16 @@ export const Range = ({ min, max }: RangeProps) => {
         maxValue={maxValue}
         onMinValueChange={onMinRangeChange}
         onMaxValueChange={onMaxRangeChange}
+        values={values}
       />
       <input
+        id='max-input'
         className='bg-transparent w-10'
         type='number'
         min={minValue}
         value={maxValueInput}
         onChange={onMaxValueChange}
-        onBlur={onBlur}
+        onBlur={onMaxBlur}
       />
     </div>
   );

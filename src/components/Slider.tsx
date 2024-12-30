@@ -19,9 +19,11 @@ export const Slider = ({ value, min, max, containerRef, onChange }: SliderProps)
       const { clientX } = event;
       const slider = containerRef.current.getBoundingClientRect();
       const posX = clientX - slider.left;
+
       let selectedValue = Math.round((posX / slider.width) * (max - min) + min);
       selectedValue = Math.max(min, selectedValue);
       selectedValue = Math.min(max, selectedValue);
+
       onChange(selectedValue);
     },
     [containerRef, isDragging, max, min, onChange],
