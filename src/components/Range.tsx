@@ -9,6 +9,8 @@ type RangeProps = {
 };
 
 export const Range = ({ min, max, values }: RangeProps) => {
+  const hasValues = values && values.length > 0;
+
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
 
@@ -68,6 +70,7 @@ export const Range = ({ min, max, values }: RangeProps) => {
       <input
         id='min-input'
         className='bg-transparent w-10 text-end'
+        disabled={hasValues}
         type='number'
         max={maxValue}
         value={minValueInput}
@@ -86,6 +89,7 @@ export const Range = ({ min, max, values }: RangeProps) => {
       <input
         id='max-input'
         className='bg-transparent w-10'
+        disabled={hasValues}
         type='number'
         min={minValue}
         value={maxValueInput}

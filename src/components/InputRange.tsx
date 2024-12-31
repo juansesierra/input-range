@@ -9,20 +9,41 @@ type InputRangeProps = {
   maxValue: number;
   onMinValueChange: (value: number) => void;
   onMaxValueChange: (value: number) => void;
+  values?: number[];
 };
 
-export const InputRange = ({ min, max, minValue, maxValue, onMinValueChange, onMaxValueChange }: InputRangeProps) => {
+const getClosestValue = (value: number, values: number[]) => {
+  const closestValue = values.reduce((prev, curr) => {
+    return Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev;
+  });
+  return closestValue;
+};
+
+export const InputRange = ({
+  min,
+  max,
+  minValue,
+  maxValue,
+  onMinValueChange,
+  onMaxValueChange,
+  values,
+}: InputRangeProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const hasValues = values && values.length > 0;
 
   const onCurrentMinValueChange = (value: number) => {
-    if (value < maxValue) {
-      onMinValueChange(value);
+    const valueToChange = hasValues ? getClosestValue(value, values) : value;
+
+    if (valueToChange < maxValue) {
+      onMinValueChange(valueToChange);
     }
   };
 
   const onCurrentMaxValueChange = (value: number) => {
-    if (value > minValue) {
-      onMaxValueChange(value);
+    const valueToChange = hasValues ? getClosestValue(value, values) : value;
+
+    if (valueToChange > minValue) {
+      onMaxValueChange(valueToChange);
     }
   };
 
