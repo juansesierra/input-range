@@ -94,7 +94,7 @@ describe('Range with min and max only', () => {
 
 describe('Range with min, max and values', () => {
   beforeEach(() => {
-    range = render(<Range min={10} max={90} values={[10, 25, 60, 70, 90]} />);
+    range = render(<Range values={[10, 25, 60, 70, 90]} />);
     maxInput = range.container.querySelector('#max-input');
     minInput = range.container.querySelector('#min-input');
   });

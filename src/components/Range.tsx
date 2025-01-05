@@ -2,14 +2,24 @@
 import React, { ChangeEvent, useState } from 'react';
 import { InputRange } from './InputRange';
 
-type RangeProps = {
-  min: number;
-  max: number;
-  values?: number[];
-};
+type RangeProps =
+  | {
+      min: number;
+      max: number;
+      values?: never;
+    }
+  | {
+      min?: never;
+      max?: never;
+      values: number[];
+    };
 
-export const Range = ({ min, max, values }: RangeProps) => {
-  const hasValues = values && values.length > 0;
+export const Range = (props: RangeProps) => {
+  const { values } = props;
+  const hasValues = Boolean(values && values.length > 0);
+
+  const min = values ? values[0] : props.min;
+  const max = values ? values[values.length - 1] : props.max;
 
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
@@ -66,7 +76,7 @@ export const Range = ({ min, max, values }: RangeProps) => {
   };
 
   return (
-    <div className='flex flex-row gap-4 items-center p-10'>
+    <div className='flex flex-row gap-4 items-center'>
       <input
         id='min-input'
         className='bg-transparent w-10 text-end'
