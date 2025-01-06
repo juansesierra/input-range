@@ -51,7 +51,7 @@ export const InputRange = ({
     <div id='slider' className='bg-gray-300 w-full h-2 relative inline-flex items-center p-0' ref={sliderRef}>
       <Slider containerRef={sliderRef} max={max} min={min} value={minValue} onChange={onCurrentMinValueChange} />
       <div
-        className='bg-sky-500 w-full h-2 absolute items-center inline-flex'
+        className='bg-sky-500 w-full h-2 absolute'
         style={{
           width: `${((maxValue - minValue) / (max - min)) * 100}%`,
           left: `${((minValue - min) / (max - min)) * 100}%`,
