@@ -2,9 +2,10 @@ import { expect, test } from '@playwright/test';
 import { Exercise1Page } from './pages/exercise1';
 
 let exercise1Page: Exercise1Page;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://demo7841693.mockable.io';
 
 test.beforeEach(async ({ page }) => {
-  await page.route('http://demo7841693.mockable.io/range', async (route) => {
+  await page.route(`${API_URL}/range`, async (route) => {
     const json = { min: 0, max: 100 };
     await route.fulfill({ json });
   });
