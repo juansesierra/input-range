@@ -46,20 +46,18 @@ export class RangePage {
   }
 
   async slideMinTo(position: number) {
-    const sliderTrack = await this.sliderTrack;
-
-    await this.minBullet.dragTo(sliderTrack, {
+    await this.minBullet.dragTo(this.sliderTrack, {
       force: true,
       targetPosition: { x: position, y: 0 },
+      timeout: 3000,
     });
   }
 
   async slideMaxTo(position: number) {
-    const sliderTrack = await this.sliderTrack;
-
-    await this.maxBullet.dragTo(sliderTrack, {
+    await this.maxBullet.dragTo(this.sliderTrack, {
       force: true,
       targetPosition: { x: position, y: 0 },
+      timeout: 3000,
     });
   }
 }

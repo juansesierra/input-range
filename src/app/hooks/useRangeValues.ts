@@ -2,16 +2,13 @@ import { getValues } from '@/services/rangeService';
 import { useEffect, useState } from 'react';
 
 export const useRangeValues = () => {
-  const [values, setValues] = useState<number[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState<number[]>([]);
 
   useEffect(() => {
-    setIsLoading(true);
     getValues().then((response) => {
-      setValues(response);
-      setIsLoading(false);
+      setData(response.values);
     });
   }, []);
 
-  return { values, isLoading };
+  return { data };
 };

@@ -5,9 +5,9 @@ import { Range } from '@/components/Range';
 import { useRangeValues } from '../hooks/useRangeValues';
 
 const Exercise2Page = () => {
-  const { values, isLoading } = useRangeValues();
+  const { data } = useRangeValues();
 
-  return <div className='p-10'>{isLoading ? <span>loading...</span> : <Range values={values} />}</div>;
+  return <div className='p-10'>{data && data.length && <Range values={data} />}</div>;
 };
 
 export default Exercise2Page;

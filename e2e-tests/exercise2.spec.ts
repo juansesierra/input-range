@@ -5,7 +5,7 @@ let exercise2Page: Exercise2Page;
 
 test.beforeEach(async ({ page }) => {
   await page.route('http://demo7841693.mockable.io/range/values', async (route) => {
-    const values = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+    const values = { values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100] };
     await route.fulfill({ json: values });
   });
 
@@ -62,8 +62,7 @@ test.describe('Slide min value', async () => {
 
 test.describe('Slide max value', async () => {
   test('Cannot slide less than the min value', async () => {
-    const bulletWidth = await exercise2Page.getBulletWidth();
-    await exercise2Page.slideMaxTo(-bulletWidth);
+    await exercise2Page.slideMaxTo(-100);
 
     expect(await exercise2Page.maxInput.inputValue()).toBe('100');
   });
