@@ -21,7 +21,7 @@ test('Range is rendered correctly', async () => {
   expect(maxValue).toBe('100');
 });
 
-test.describe('Slide min value', () => {
+test.describe('Slide min value', async () => {
   test('Slide to the half page', async () => {
     const sliderTrackWidth = await exercise1Page.getTrackWidth();
     await exercise1Page.slideMinTo(sliderTrackWidth / 2);
@@ -52,7 +52,7 @@ test.describe('Slide min value', () => {
   });
 });
 
-test.describe('Slide max value', () => {
+test.describe('Slide max value', async () => {
   test('Slide to the half page', async () => {
     const sliderTrackWidth = await exercise1Page.getTrackWidth();
     await exercise1Page.slideMaxTo(sliderTrackWidth / 2);

@@ -24,7 +24,7 @@ test('Range is rendered correctly', async () => {
   expect(await exercise2Page.maxInput.isDisabled()).toBe(true);
 });
 
-test.describe('Slide min value', () => {
+test.describe('Slide min value', async () => {
   test('Cannot slide less than the min value', async () => {
     await exercise2Page.slideMinTo(-100);
 
@@ -60,7 +60,7 @@ test.describe('Slide min value', () => {
   });
 });
 
-test.describe('Slide max value', () => {
+test.describe('Slide max value', async () => {
   test('Cannot slide less than the min value', async () => {
     const bulletWidth = await exercise2Page.getBulletWidth();
     await exercise2Page.slideMaxTo(-bulletWidth);
