@@ -50,7 +50,7 @@ export const Range = (props: RangeProps) => {
       onMinRangeChange(min);
       return;
     }
-    if (minValueInput > maxValueInput) {
+    if (minValueInput >= maxValueInput) {
       setMinValueInput(minValue);
       return;
     }
@@ -65,7 +65,7 @@ export const Range = (props: RangeProps) => {
       onMaxRangeChange(max);
       return;
     }
-    if (maxValueInput < minValueInput) {
+    if (maxValueInput <= minValueInput) {
       setMaxValueInput(maxValue);
       return;
     }

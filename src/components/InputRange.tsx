@@ -48,7 +48,7 @@ export const InputRange = ({
   };
 
   return (
-    <div className='bg-white w-full h-2 relative inline-flex items-center p-0' ref={sliderRef}>
+    <div id='slider' className='bg-white w-full h-2 relative inline-flex items-center p-0' ref={sliderRef}>
       <Slider containerRef={sliderRef} max={max} min={min} value={minValue} onChange={onCurrentMinValueChange} />
       <div
         className='bg-sky-500 w-full h-2 absolute items-center inline-flex'

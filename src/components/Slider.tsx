@@ -60,6 +60,7 @@ export const Slider = ({ value, min, max, containerRef, onChange }: SliderProps)
       style={{ width: `${((value - min) / (max - min)) * 100}%` }}
     >
       <span
+        data-testid='slider-value'
         className={clsx(
           'bg-sky-500 rounded-full absolute right-[-8] h-4 w-4 z-10',
           isDragging ? 'cursor-grabbing scale-125' : 'hover:cursor-grab hover:scale-125',
