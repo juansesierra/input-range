@@ -92,7 +92,7 @@ describe('Range with min and max only', () => {
   });
 });
 
-describe('Range with min, max and values', () => {
+describe('Range with values', () => {
   beforeEach(() => {
     range = render(<Range values={[10, 25, 60, 70, 90]} />);
     maxInput = range.container.querySelector('#max-input');
