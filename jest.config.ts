@@ -6,9 +6,11 @@ const createJestConfig = nextJest({
 });
 
 const config: Config = {
+  verbose: true,
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
   testPathIgnorePatterns: ['<rootDir>/e2e-tests/'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 };
 
 export default createJestConfig(config);
