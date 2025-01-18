@@ -47,9 +47,36 @@ export const InputRange = ({
     }
   };
 
+  const onMinKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
+    onKeyDown(event, minValue, onCurrentMinValueChange);
+  };
+
+  const onMaxKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
+    onKeyDown(event, maxValue, onCurrentMaxValueChange);
+  };
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>, value: number, onChange: (value: number) => void) => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      let selectedValue = value;
+      if (event.key === 'ArrowLeft') {
+        selectedValue = hasValues ? values[values.indexOf(minValue) - 1] : Math.max(value - 1, min);
+      } else if (event.key === 'ArrowRight') {
+        selectedValue = hasValues ? values[values.indexOf(minValue) + 1] : Math.max(value + 1, min);
+      }
+      onChange(selectedValue);
+    }
+  };
+
   return (
     <div id='slider' className='bg-gray-300 w-full h-2 relative inline-flex items-center p-0' ref={sliderRef}>
-      <Slider containerRef={sliderRef} max={max} min={min} value={minValue} onChange={onCurrentMinValueChange} />
+      <Slider
+        containerRef={sliderRef}
+        max={max}
+        min={min}
+        value={minValue}
+        onChange={onCurrentMinValueChange}
+        onKeyDown={onMinKeyDown}
+      />
       <div
         className='bg-sky-500 w-full h-2 absolute'
         style={{
@@ -57,7 +84,14 @@ export const InputRange = ({
           left: `${((minValue - min) / (max - min)) * 100}%`,
         }}
       />
-      <Slider containerRef={sliderRef} max={max} min={min} value={maxValue} onChange={onCurrentMaxValueChange} />
+      <Slider
+        containerRef={sliderRef}
+        max={max}
+        min={min}
+        value={maxValue}
+        onChange={onCurrentMaxValueChange}
+        onKeyDown={onMaxKeyDown}
+      />
     </div>
   );
 };

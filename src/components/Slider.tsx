@@ -6,10 +6,11 @@ type SliderProps = {
   max: number;
   min: number;
   value: number;
-  onChange: (value: number) => void;
+  onChange: (value: number, isFromKeyboard?: boolean) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLSpanElement>) => void;
 };
 
-export const Slider = ({ value, min, max, containerRef, onChange }: SliderProps) => {
+export const Slider = ({ value, min, max, containerRef, onChange, onKeyDown }: SliderProps) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const movePosition = useCallback(
@@ -64,9 +65,12 @@ export const Slider = ({ value, min, max, containerRef, onChange }: SliderProps)
         className={clsx(
           'bg-sky-500 rounded-full absolute right-[-8] h-4 w-4 z-10',
           isDragging ? 'cursor-grabbing scale-125' : 'hover:cursor-grab hover:scale-125',
+          'focus:scale-125',
         )}
         onMouseDown={handleStartDragging}
         onTouchStart={handleStartDragging}
+        onKeyDown={onKeyDown}
+        tabIndex={0}
       />
     </div>
   );

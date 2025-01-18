@@ -75,6 +75,12 @@ export const Range = (props: RangeProps) => {
     }
   };
 
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.currentTarget.blur();
+    }
+  };
+
   return (
     <div className='flex flex-row gap-4 items-center'>
       <input
@@ -86,6 +92,7 @@ export const Range = (props: RangeProps) => {
         value={minValueInput}
         onChange={onMinValueChange}
         onBlur={onMinBlur}
+        onKeyDown={onKeyDown}
       />
       <InputRange
         min={min}
@@ -105,6 +112,7 @@ export const Range = (props: RangeProps) => {
         value={maxValueInput}
         onChange={onMaxValueChange}
         onBlur={onMaxBlur}
+        onKeyDown={onKeyDown}
       />
     </div>
   );
