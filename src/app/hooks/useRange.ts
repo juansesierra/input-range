@@ -6,9 +6,13 @@ export const useRange = () => {
   const [data, setData] = useState<{ min: number; max: number }>();
 
   useEffect(() => {
-    getMaxAndMin().then((response) => {
-      setData(response);
-    });
+    getMaxAndMin()
+      .then((response) => {
+        setData(response);
+      })
+      .catch(() => {
+        setData(undefined);
+      });
   }, []);
 
   return { data };

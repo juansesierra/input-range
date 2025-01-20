@@ -34,7 +34,7 @@ export const InputRange = ({
   const onCurrentMinValueChange = (value: number) => {
     const valueToChange = hasValues ? getClosestValue(value, values) : value;
 
-    if (valueToChange < maxValue) {
+    if (valueToChange < maxValue && valueToChange >= min) {
       onMinValueChange(valueToChange);
     }
   };
@@ -42,7 +42,7 @@ export const InputRange = ({
   const onCurrentMaxValueChange = (value: number) => {
     const valueToChange = hasValues ? getClosestValue(value, values) : value;
 
-    if (valueToChange > minValue) {
+    if (valueToChange > minValue && valueToChange <= max) {
       onMaxValueChange(valueToChange);
     }
   };
@@ -59,9 +59,9 @@ export const InputRange = ({
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       let selectedValue = value;
       if (event.key === 'ArrowLeft') {
-        selectedValue = hasValues ? values[values.indexOf(minValue) - 1] : Math.max(value - 1, min);
+        selectedValue = hasValues ? values[values.indexOf(value) - 1] : Math.max(value - 1, min);
       } else if (event.key === 'ArrowRight') {
-        selectedValue = hasValues ? values[values.indexOf(minValue) + 1] : Math.max(value + 1, min);
+        selectedValue = hasValues ? values[values.indexOf(value) + 1] : Math.max(value + 1, min);
       }
       onChange(selectedValue);
     }

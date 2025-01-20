@@ -5,9 +5,13 @@ export const useRangeValues = () => {
   const [data, setData] = useState<number[]>([]);
 
   useEffect(() => {
-    getValues().then((response) => {
-      setData(response.values);
-    });
+    getValues()
+      .then((response) => {
+        setData(response.values);
+      })
+      .catch(() => {
+        setData([]);
+      });
   }, []);
 
   return { data };
