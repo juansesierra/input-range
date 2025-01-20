@@ -51,6 +51,23 @@ test.describe('Slide min value', async () => {
 
     expect(await exercise1Page.minInput.inputValue()).toBe('0');
   });
+
+  test('Can move min bullet with arrow left', async ({ page }) => {
+    const sliderTrackWidth = await exercise1Page.getTrackWidth();
+
+    await exercise1Page.slideMinTo(sliderTrackWidth * 0.1);
+    await exercise1Page.minBullet.focus();
+    await page.keyboard.press('ArrowLeft');
+
+    expect(await exercise1Page.minInput.inputValue()).toBe('9');
+  });
+
+  test('Can move min bullet with arrow right', async ({ page }) => {
+    await exercise1Page.minBullet.focus();
+    await page.keyboard.press('ArrowRight');
+
+    expect(await exercise1Page.minInput.inputValue()).toBe('1');
+  });
 });
 
 test.describe('Slide max value', async () => {
@@ -82,6 +99,22 @@ test.describe('Slide max value', async () => {
     await exercise1Page.slideMaxTo(sliderTrackWidth + bulletWidth);
 
     expect(await exercise1Page.maxInput.inputValue()).toBe('100');
+  });
+
+  test('Can move max bullet with arrow left', async ({ page }) => {
+    await exercise1Page.maxBullet.focus();
+    await page.keyboard.press('ArrowLeft');
+
+    expect(await exercise1Page.maxInput.inputValue()).toBe('99');
+  });
+
+  test('Can move min bullet with arrow right', async ({ page }) => {
+    const sliderTrackWidth = await exercise1Page.getTrackWidth();
+    await exercise1Page.slideMaxTo(sliderTrackWidth * 0.2);
+    await exercise1Page.maxBullet.focus();
+    await page.keyboard.press('ArrowRight');
+
+    expect(await exercise1Page.maxInput.inputValue()).toBe('21');
   });
 });
 

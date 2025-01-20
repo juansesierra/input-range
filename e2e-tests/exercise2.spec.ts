@@ -59,6 +59,21 @@ test.describe('Slide min value', async () => {
 
     expect(await exercise2Page.minInput.inputValue()).toBe('80');
   });
+
+  test('move min value to the next value', async ({ page }) => {
+    await exercise2Page.minBullet.focus();
+    await page.keyboard.press('ArrowRight');
+    expect(await exercise2Page.minInput.inputValue()).toBe('10');
+  });
+
+  test('move min value to previous value', async ({ page }) => {
+    const sliderTrackWidth = await exercise2Page.getTrackWidth();
+    await exercise2Page.slideMinTo(sliderTrackWidth * 0.5);
+
+    await exercise2Page.minBullet.focus();
+    await page.keyboard.press('ArrowLeft');
+    expect(await exercise2Page.minInput.inputValue()).toBe('40');
+  });
 });
 
 test.describe('Slide max value', async () => {
@@ -89,5 +104,21 @@ test.describe('Slide max value', async () => {
     await exercise2Page.slideMaxTo(sliderTrackWidth * 0.37);
 
     expect(await exercise2Page.maxInput.inputValue()).toBe('40');
+  });
+
+  test('move max value to the next value', async ({ page }) => {
+    const sliderTrackWidth = await exercise2Page.getTrackWidth();
+    await exercise2Page.slideMaxTo(sliderTrackWidth * 0.5);
+
+    await exercise2Page.maxBullet.focus();
+    await page.keyboard.press('ArrowRight');
+
+    expect(await exercise2Page.maxInput.inputValue()).toBe('60');
+  });
+
+  test('move min value to previous value', async ({ page }) => {
+    await exercise2Page.maxBullet.focus();
+    await page.keyboard.press('ArrowLeft');
+    expect(await exercise2Page.maxInput.inputValue()).toBe('90');
   });
 });
