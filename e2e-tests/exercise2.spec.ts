@@ -66,6 +66,12 @@ test.describe('Slide min value', async () => {
     expect(await exercise2Page.minInput.inputValue()).toBe('10');
   });
 
+  test('it ignores irrelevant keyboards', async ({ page }) => {
+    await exercise2Page.minBullet.focus();
+    await page.keyboard.press('ArrowUp');
+    expect(await exercise2Page.minInput.inputValue()).toBe('0');
+  });
+
   test('move min value to previous value', async ({ page }) => {
     const sliderTrackWidth = await exercise2Page.getTrackWidth();
     await exercise2Page.slideMinTo(sliderTrackWidth * 0.5);
@@ -114,6 +120,12 @@ test.describe('Slide max value', async () => {
     await page.keyboard.press('ArrowRight');
 
     expect(await exercise2Page.maxInput.inputValue()).toBe('60');
+  });
+
+  test('it ignores irrelevant keyboards', async ({ page }) => {
+    await exercise2Page.maxBullet.focus();
+    await page.keyboard.press('ArrowUp');
+    expect(await exercise2Page.maxInput.inputValue()).toBe('100');
   });
 
   test('move min value to previous value', async ({ page }) => {
